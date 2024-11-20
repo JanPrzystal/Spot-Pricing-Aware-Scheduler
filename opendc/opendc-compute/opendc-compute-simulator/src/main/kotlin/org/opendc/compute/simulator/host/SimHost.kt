@@ -36,6 +36,7 @@ import org.opendc.simulator.compute.cpu.CpuPowerModel
 import org.opendc.simulator.compute.machine.SimMachine
 import org.opendc.simulator.compute.models.MachineModel
 import org.opendc.simulator.compute.models.MemoryUnit
+import org.opendc.simulator.compute.models.HostPriceModel
 import org.opendc.simulator.engine.FlowGraph
 import java.time.Duration
 import java.time.Instant
@@ -52,6 +53,7 @@ import java.util.UUID
  * @param graph The Flow Graph that the Host is part of
  * @param machineModel The static model of the host
  * @param powerModel The static powerModel of the CPU TODO: can this be combined with machinemodel?
+ * @param priceModel The static priceModel of the host
  * @constructor Create empty Sim host
  */
 public class SimHost(
@@ -62,6 +64,7 @@ public class SimHost(
     private val graph: FlowGraph,
     private val machineModel: MachineModel,
     private val powerModel: CpuPowerModel,
+    private val priceModel: HostPriceModel,
     private val powerMux: Multiplexer,
 ) : AutoCloseable {
     /**
@@ -294,6 +297,7 @@ public class SimHost(
             }
         }
 
+        // TODO: Add price here as SystemStat
         return HostSystemStats(
             Duration.ofMillis(totalUptime),
             Duration.ofMillis(totalDowntime),
