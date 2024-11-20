@@ -35,7 +35,7 @@ import org.opendc.simulator.compute.workload.Workload;
 import org.opendc.simulator.engine.FlowGraph;
 
 
-// TODO 2: This file should be where we add HostPriceModel.
+// TODO! 2: This file should be where we add HostPriceModel.
 
 /**
  * A machine that is able to execute {@link SimWorkload} objects.
