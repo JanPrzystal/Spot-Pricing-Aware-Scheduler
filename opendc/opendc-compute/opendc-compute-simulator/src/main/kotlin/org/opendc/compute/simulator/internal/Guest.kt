@@ -110,6 +110,7 @@ public class Guest(
             )
         val newChainWorkload =
             ChainWorkload(
+                //TODO something with checkpoints and loading
                 ArrayList(listOf(task.workload)),
                 task.workload.checkpointInterval,
                 task.workload.checkpointDuration,

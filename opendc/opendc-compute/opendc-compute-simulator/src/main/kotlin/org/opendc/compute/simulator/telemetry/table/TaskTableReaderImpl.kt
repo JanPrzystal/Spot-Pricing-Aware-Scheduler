@@ -171,7 +171,7 @@ public class TaskTableReaderImpl(
                     newHost.getModel().coreCount,
                     newHost.getModel().cpuCapacity,
                     newHost.getModel().memoryCapacity,
-                    0.0, //TODO host price
+                    newHost.price, //direct field access
                 )
         }
 

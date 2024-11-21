@@ -67,6 +67,8 @@ public class HostsProvisioningStep internal constructor(
             val powerMux = Multiplexer(graph)
             graph.addEdge(powerMux, simPowerSource)
 
+            val price = 0.0 //TODO figure out the price
+
             // Create hosts, they are connected to the powerMux when SimMachine is created
             for (hostSpec in cluster.hostSpecs) {
                 val simHost =
@@ -79,6 +81,7 @@ public class HostsProvisioningStep internal constructor(
                         hostSpec.model,
                         hostSpec.cpuPowerModel,
                         powerMux,
+                        price,
                     )
 
                 require(simHosts.add(simHost)) { "Host with uid ${hostSpec.uid} already exists" }

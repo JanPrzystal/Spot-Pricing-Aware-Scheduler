@@ -66,6 +66,7 @@ public class SimHost(
     private val powerModel: CpuPowerModel,
     private val priceModel: HostPriceModel,
     private val powerMux: Multiplexer,
+    public val price: Double,
 ) : AutoCloseable {
     /**
      * The event listeners registered with this host.

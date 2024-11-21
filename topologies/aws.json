@@ -1,0 +1,71 @@
+{
+    "clusters":
+    [
+        {
+            "name": "C01",
+            "hosts" :
+            [
+                {
+                    "name": "c5.large",
+                    "cpu":
+                    {
+                        "coreCount": 2,
+                        "coreSpeed": 3400
+                    },
+                    "memory": {
+                        "memorySize": 4000000000
+                    },
+                    "count": 10
+                },
+                {
+                    "name": "c5.large",
+                    "cpu":
+                    {
+                        "coreCount": 2,
+                        "coreSpeed": 3400
+                    },
+                    "memory": {
+                        "memorySize": 4000000000
+                    },
+                    "count": 8
+                },
+                {
+                    "name": "c5.large",
+                    "cpu":
+                    {
+                        "coreCount": 2,
+                        "coreSpeed": 3400
+                    },
+                    "memory": {
+                        "memorySize": 4000000000
+                    },
+                    "count": 6
+                },
+                {
+                    "name": "c5.large",
+                    "cpu":
+                    {
+                        "coreCount": 2,
+                        "coreSpeed": 3400
+                    },
+                    "memory": {
+                        "memorySize": 4000000000
+                    },
+                    "count": 4
+                },
+                {
+                    "name": "c5.large",
+                    "cpu":
+                    {
+                        "coreCount": 2,
+                        "coreSpeed": 3400
+                    },
+                    "memory": {
+                        "memorySize": 4000000000
+                    },
+                    "count": 2
+                }
+            ]
+        }
+    ]
+}

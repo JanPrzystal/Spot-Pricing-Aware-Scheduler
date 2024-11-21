@@ -75,7 +75,7 @@ public class HostTableReaderImpl(
             host.getModel().coreCount,
             host.getModel().cpuCapacity,
             host.getModel().memoryCapacity,
-            0.0, //TODO host price
+            host.price, //direct field access
         )
 
     override val timestamp: Instant

@@ -74,6 +74,11 @@ public object DfltHostExportColumns {
                     .named("host_name"),
         ) { Binary.fromString(it.host.name) }
 
+    public val PRICE: ExportColumn<HostTableReader> =
+        ExportColumn(
+            field = Types.required(FLOAT).named("price"),
+        ) { it.host.price }
+
     public val CPU_COUNT: ExportColumn<HostTableReader> =
         ExportColumn(
             field = Types.required(INT32).named("core_count"),
