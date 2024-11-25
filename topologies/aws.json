@@ -6,35 +6,35 @@
             "hosts" :
             [
                 {
-                    "name": "c5.large",
+                    "name": "r5.large",
                     "cpu":
                     {
-                        "coreCount": 2,
-                        "coreSpeed": 3400
+                        "coreCount": 1,
+                        "coreSpeed": 3100
                     },
                     "memory": {
-                        "memorySize": 4000000000
+                        "memorySize": 16000000000
                     },
-                    "count": 10
+                    "count": 4
                 },
                 {
-                    "name": "c5.large",
+                    "name": "m5.large",
                     "cpu":
                     {
-                        "coreCount": 2,
-                        "coreSpeed": 3400
+                        "coreCount": 1,
+                        "coreSpeed": 3100
                     },
                     "memory": {
-                        "memorySize": 4000000000
+                        "memorySize": 8000000000
                     },
                     "count": 8
                 },
                 {
-                    "name": "c5.large",
+                    "name": "t3.medium",
                     "cpu":
                     {
-                        "coreCount": 2,
-                        "coreSpeed": 3400
+                        "coreCount": 1,
+                        "coreSpeed": 2500
                     },
                     "memory": {
                         "memorySize": 4000000000
@@ -45,25 +45,13 @@
                     "name": "c5.large",
                     "cpu":
                     {
-                        "coreCount": 2,
+                        "coreCount": 1,
                         "coreSpeed": 3400
                     },
                     "memory": {
                         "memorySize": 4000000000
                     },
-                    "count": 4
-                },
-                {
-                    "name": "c5.large",
-                    "cpu":
-                    {
-                        "coreCount": 2,
-                        "coreSpeed": 3400
-                    },
-                    "memory": {
-                        "memorySize": 4000000000
-                    },
-                    "count": 2
+                    "count": 10
                 }
             ]
         }
