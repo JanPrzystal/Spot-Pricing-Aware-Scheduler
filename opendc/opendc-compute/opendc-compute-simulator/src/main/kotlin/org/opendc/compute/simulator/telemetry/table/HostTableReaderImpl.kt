@@ -29,6 +29,7 @@ import java.time.Instant
 /**
  * An aggregator for host metrics before they are reported.
  */
+
 public class HostTableReaderImpl(
     host: SimHost,
     private val startTime: Duration = Duration.ofMillis(0),
@@ -63,6 +64,7 @@ public class HostTableReaderImpl(
         _downtime = table.downtime
         _bootTime = table.bootTime
         _bootTimeAbsolute = table.bootTimeAbsolute
+   //TODO  _price= table.price
     }
 
     private val _host = host
