@@ -68,6 +68,16 @@ public class SimHost(
 //    private val price: Double,
     private val priceFragments: List<PriceFragment>,
 ) : AutoCloseable {
+    public var price: Double = -1.0
+
+    /**
+     * Get the price to performance ratio of a host
+     * Performance is simplified because there is no specific data about cpu core types so they are assumed to be identical
+     */
+    public fun getPriceToPerformance(): Double {
+        return machineModel.cpu.coreCount * machineModel.cpu.coreSpeed / price
+    }
+
     /**
      * The event listeners registered with this host.
      */
@@ -198,8 +208,6 @@ public class SimHost(
         return meta
     }
 
-    public var price
-
     public fun getState(): HostState {
         return hostState
     }
@@ -308,11 +316,7 @@ public class SimHost(
             }
         }
 
-        // TODO! Double check implementation here
-        // Get the price based on the current time
-        val currentTime = clock.millis()
-        val price = priceModel.getPrice(currentTime)
-
+        // TODO! 1: Add price here as SystemStat
         return HostSystemStats(
             Duration.ofMillis(totalUptime),
             Duration.ofMillis(totalDowntime),
@@ -323,7 +327,6 @@ public class SimHost(
             running,
             failed,
             invalid,
-            price
         )
     }
 
