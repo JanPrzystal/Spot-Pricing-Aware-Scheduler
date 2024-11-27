@@ -66,8 +66,17 @@ public class SimHost(
     private val powerModel: CpuPowerModel,
     private val priceModel: HostPriceModel,
     private val powerMux: Multiplexer,
-    public val price: Double,
 ) : AutoCloseable {
+    public var price: Double = -1.0
+
+    /**
+     * Get the price to performance ratio of a host
+     * Performance is simplified because there is no specific data about cpu core types so they are assumed to be identical
+     */
+    public fun getPriceToPerformance(): Double {
+        return machineModel.cpu.coreCount * machineModel.cpu.coreSpeed / price
+    }
+
     /**
      * The event listeners registered with this host.
      */
