@@ -29,6 +29,7 @@ import org.opendc.compute.topology.specs.ClusterSpec
 import org.opendc.compute.topology.specs.HostSpec
 import org.opendc.simulator.Multiplexer
 import org.opendc.simulator.compute.power.SimPowerSource
+import org.opendc.simulator.compute.price.getPriceFragments
 import org.opendc.simulator.engine.FlowEngine
 
 /**
@@ -67,10 +68,14 @@ public class HostsProvisioningStep internal constructor(
             val powerMux = Multiplexer(graph)
             graph.addEdge(powerMux, simPowerSource)
 
-            val price = 0.0 //TODO figure out the price
+
+
 
             // Create hosts, they are connected to the powerMux when SimMachine is created
             for (hostSpec in cluster.hostSpecs) {
+                // TODO! Create priceFragments here and pass to SimHost for creation
+                val priceFragments = getPriceFragments(hostSpec.priceTracePath)
+
                 val simHost =
                     SimHost(
                         hostSpec.uid,
@@ -81,7 +86,7 @@ public class HostsProvisioningStep internal constructor(
                         hostSpec.model,
                         hostSpec.cpuPowerModel,
                         powerMux,
-                        price,
+                        priceFragments,
                     )
 
                 require(simHosts.add(simHost)) { "Host with uid ${hostSpec.uid} already exists" }

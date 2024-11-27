@@ -3,17 +3,17 @@ package org.opendc.simulator.compute.price;
 
 import java.util.List;
 
-import org.opendc.simulator.compute.power.SimPowerSource;
+import org.opendc.compute.simulator.host.SimHost;
 import org.opendc.simulator.engine.FlowGraph;
 import org.opendc.simulator.engine.FlowNode;
 
 /**
- * PriceModel used to provide the Spot Pricing information for a {@link SimPowerSource}
+ * PriceModel used to provide the Spot Pricing information for a {@link SimHost}
  * A PriceModel is based on a list of {@link PriceFragment} that define the price at specific time frames.
  */
 public class PriceModel extends FlowNode {
     private double totalCost = 0.0; // Total accumulated cost
-    private SimPowerSource powerSource; // Reference to the power source (if applicable)
+    private SimHost host; // Reference to the host (if applicable)
 
     private long startTime = 0L; // The absolute timestamp on which the workload started
     private List<PriceFragment> fragments; // List of price fragments for simulation
@@ -24,15 +24,15 @@ public class PriceModel extends FlowNode {
      * Construct a PriceModel
      *
      * @param parentGraph The active FlowGraph which should be used to make the new FlowNode
-     * @param powerSource The Power Source which may require price updates (can be null if not applicable)
+     * @param host The SimHost which may require price updates (can be null if not applicable)
      * @param priceFragments A list of Price Fragments defining the price at different time frames
      * @param startTime The start time of the simulation. This is used to convert relative time to absolute time.
      */
     public PriceModel(
-        FlowGraph parentGraph, SimPowerSource powerSource, List<PriceFragment> priceFragments, long startTime) {
+        FlowGraph parentGraph, SimHost host, List<PriceFragment> priceFragments, long startTime) {
         super(parentGraph);
 
-        this.powerSource = powerSource;
+        this.host = host;
         this.startTime = startTime;
         this.fragments = priceFragments;
 
@@ -97,5 +97,9 @@ public class PriceModel extends FlowNode {
      */
     public double getTotalCost() {
         return totalCost;
+    }
+
+    private void pushPriceIntensity(double price) {
+        this.host.updatePrice(price);
     }
 }
