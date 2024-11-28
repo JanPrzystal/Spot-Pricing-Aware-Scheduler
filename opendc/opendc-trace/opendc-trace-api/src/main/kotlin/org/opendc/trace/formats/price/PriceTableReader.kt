@@ -35,7 +35,7 @@ internal class PriceTableReader(private val reader: LocalParquetReader<PriceFrag
 
     private val colTimestamp = 0
     private val colInstanceType = 1
-    private val colSpotPrice = 2
+    private val colSpotPrice = 7
 
     override fun resolve(name: String): Int {
         return when (name) {

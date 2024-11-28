@@ -36,6 +36,7 @@ import org.opendc.simulator.compute.cpu.CpuPowerModel
 import org.opendc.simulator.compute.machine.SimMachine
 import org.opendc.simulator.compute.models.MachineModel
 import org.opendc.simulator.compute.models.MemoryUnit
+import org.opendc.simulator.compute.price.PriceFragment
 import org.opendc.simulator.compute.price.PriceModel
 import org.opendc.simulator.engine.FlowGraph
 import java.time.Duration
@@ -56,6 +57,7 @@ import java.util.UUID
  * @param priceFragments The static priceModel of the host
  * @constructor Create empty Sim host
  */
+
 public class SimHost(
     private val uid: UUID,
     private val name: String,
@@ -67,6 +69,7 @@ public class SimHost(
     private val powerMux: Multiplexer,
 //    private val price: Double,
     private val priceFragments: List<PriceFragment>,
+    private val startTime: Long
 ) : AutoCloseable {
     public var price: Double = -1.0
 
@@ -74,6 +77,7 @@ public class SimHost(
      * Get the price to performance ratio of a host
      * Performance is simplified because there is no specific data about cpu core types so they are assumed to be identical
      */
+    //TODO! do we need this???
     public fun getPriceToPerformance(): Double {
         return machineModel.cpu.coreCount * machineModel.cpu.coreSpeed / price
     }
@@ -147,7 +151,7 @@ public class SimHost(
         }
 
         // Initialize the PriceModel
-        priceModel = PriceModel(graph, this, priceFragments, clock.millis())
+        priceModel = PriceModel(graph, his@SimHost, priceFragments, startTime)
 
         this.simMachine =
             SimMachine(

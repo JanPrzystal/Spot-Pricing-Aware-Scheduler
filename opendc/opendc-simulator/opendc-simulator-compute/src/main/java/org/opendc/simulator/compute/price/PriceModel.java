@@ -1,6 +1,7 @@
 package org.opendc.simulator.compute.price;
 
 
+
 import java.util.List;
 
 import org.opendc.compute.simulator.host.SimHost;
@@ -35,7 +36,6 @@ public class PriceModel extends FlowNode {
         this.host = host;
         this.startTime = startTime;
         this.fragments = priceFragments;
-
         this.fragmentIndex = 0;
         this.currentFragment = this.fragments.get(this.fragmentIndex);
     }

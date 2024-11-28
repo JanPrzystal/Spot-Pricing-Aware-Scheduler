@@ -29,7 +29,6 @@ import org.opendc.simulator.compute.cpu.CpuPowerModel;
 import org.opendc.simulator.compute.cpu.SimCpu;
 import org.opendc.simulator.compute.memory.Memory;
 import org.opendc.simulator.compute.models.MachineModel;
-import org.opendc.simulator.compute.models.HostPriceModel;
 import org.opendc.simulator.compute.power.SimPsu;
 import org.opendc.simulator.compute.workload.SimWorkload;
 import org.opendc.simulator.compute.workload.Workload;
@@ -41,10 +40,9 @@ import org.opendc.simulator.engine.FlowGraph;
 /**
  * A machine that is able to execute {@link SimWorkload} objects.
  */
+
 public class SimMachine {
     private final MachineModel machineModel;
-
-    private final HostPriceModel hostPriceModel;
 
     private final FlowGraph graph;
 
@@ -70,9 +68,6 @@ public class SimMachine {
     }
 
 //    TODO!: Look where getMachineModel() is used and add getHostPriceModel() there.
-    public HostPriceModel getHostPriceModel() {
-        return hostPriceModel;
-    }
 
     public FlowGraph getGraph() {
         return graph;
@@ -128,7 +123,6 @@ public class SimMachine {
             MachineModel machineModel,
             CpuPowerModel cpuPowerModel,
             Multiplexer powerMux,
-            HostPriceModel hostPriceModel,
             Consumer<Exception> completion) {
         this.graph = graph;
         this.machineModel = machineModel;
@@ -136,9 +130,6 @@ public class SimMachine {
 
         // Create the psu and cpu and connect them
         this.psu = new SimPsu(graph);
-
-        // TODO!: Add price to the constructor
-        this.hostPriceModel = new HostPriceModel();
 
         graph.addEdge(this.psu, powerMux);
 

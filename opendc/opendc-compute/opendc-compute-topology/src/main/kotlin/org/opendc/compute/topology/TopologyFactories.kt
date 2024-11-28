@@ -142,7 +142,7 @@ private fun HostJSONSpec.toHostSpec(
     val powerModel =
         getPowerModel(powerModel.modelType, powerModel.power.toWatts(), powerModel.maxPower.toWatts(), powerModel.idlePower.toWatts())
 
-    var hostName: String
+    val hostName: String
     if (name == null) {
         hostName = "Host-$hostId"
     } else {
@@ -156,6 +156,8 @@ private fun HostJSONSpec.toHostSpec(
             mapOf("cluster" to clusterId),
             machineModel,
             powerModel,
+            pricePath = this.pricePath,
+
         )
     hostId++
 
