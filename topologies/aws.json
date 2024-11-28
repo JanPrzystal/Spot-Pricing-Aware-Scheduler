@@ -6,28 +6,28 @@
             "hosts" :
             [
                 {
-                    "name": "r5.large",
+                    "name": "r7a.2xlarge",
                     "cpu":
                     {
-                        "coreCount": 1,
-                        "coreSpeed": 3100
+                        "coreCount": 8,
+                        "coreSpeed": 3700
                     },
                     "memory": {
-                        "memorySize": 16000000000
+                        "memorySize": 64000000000
                     },
                     "count": 4
                 },
                 {
-                    "name": "m5.large",
+                    "name": "m5a.4xlarge",
                     "cpu":
                     {
-                        "coreCount": 1,
-                        "coreSpeed": 3100
+                        "coreCount": 8,
+                        "coreSpeed": 2500
                     },
                     "memory": {
-                        "memorySize": 8000000000
+                        "memorySize": 64000000000
                     },
-                    "count": 8
+                    "count": 6
                 },
                 {
                     "name": "t3.medium",
@@ -39,7 +39,7 @@
                     "memory": {
                         "memorySize": 4000000000
                     },
-                    "count": 6
+                    "count": 8
                 },
                 {
                     "name": "c5.large",
@@ -51,7 +51,7 @@
                     "memory": {
                         "memorySize": 4000000000
                     },
-                    "count": 10
+                    "count": 8
                 }
             ]
         }
