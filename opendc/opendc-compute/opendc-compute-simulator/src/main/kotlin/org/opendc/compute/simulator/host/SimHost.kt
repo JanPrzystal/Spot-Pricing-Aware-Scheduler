@@ -67,11 +67,10 @@ public class SimHost(
     private val machineModel: MachineModel,
     private val powerModel: CpuPowerModel,
     private val powerMux: Multiplexer,
-//    private val price: Double,
+    public var price: Double = 0.0,
     private val priceFragments: List<PriceFragment>,
     private val startTime: Long
 ) : AutoCloseable {
-    public var price: Double = -1.0
 
     /**
      * Get the price to performance ratio of a host

@@ -97,6 +97,10 @@
                     "type": "string",
                     "default": "Host"
                 },
+                "price": {
+                    "type": "number",
+                    "default": 0
+                },
                 "count": {
                     "description": "The amount hosts of this type present in the cluster",
                     "type": "integer",

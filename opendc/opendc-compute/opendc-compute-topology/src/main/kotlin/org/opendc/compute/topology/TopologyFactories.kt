@@ -156,8 +156,8 @@ private fun HostJSONSpec.toHostSpec(
             mapOf("cluster" to clusterId),
             machineModel,
             powerModel,
-            pricePath = this.pricePath,
-
+            price = this.price,
+            pricePath = if (this.pricePath.isEmpty()) null else this.pricePath,
         )
     hostId++
 

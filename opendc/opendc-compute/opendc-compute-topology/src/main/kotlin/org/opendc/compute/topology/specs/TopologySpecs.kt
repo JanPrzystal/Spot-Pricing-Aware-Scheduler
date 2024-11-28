@@ -70,7 +70,8 @@ public data class HostJSONSpec(
     val memory: MemoryJSONSpec,
     val powerModel: PowerModelSpec = PowerModelSpec.DFLT,
     val count: Int = 1,
-    val pricePath : String,
+    val price: Double = 0.0,
+    val pricePath : String = "",
 )
 
 /**

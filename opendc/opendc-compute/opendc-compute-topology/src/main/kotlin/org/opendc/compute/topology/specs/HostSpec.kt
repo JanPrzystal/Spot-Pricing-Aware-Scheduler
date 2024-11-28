@@ -42,5 +42,6 @@ public data class HostSpec(
     val meta: Map<String, Any>,
     val model: MachineModel,
     val cpuPowerModel: CpuPowerModel,
+    val price: Double, //maybe price should be nullable
     val pricePath: String? = null
 )

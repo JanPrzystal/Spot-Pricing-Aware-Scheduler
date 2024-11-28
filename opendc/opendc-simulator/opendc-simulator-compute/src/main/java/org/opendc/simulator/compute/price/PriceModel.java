@@ -4,7 +4,7 @@ package org.opendc.simulator.compute.price;
 
 import java.util.List;
 
-import org.opendc.compute.simulator.host.SimHost;
+
 import org.opendc.simulator.engine.FlowGraph;
 import org.opendc.simulator.engine.FlowNode;
 
