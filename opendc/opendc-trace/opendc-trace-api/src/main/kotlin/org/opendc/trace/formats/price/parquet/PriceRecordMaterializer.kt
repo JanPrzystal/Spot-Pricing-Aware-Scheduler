@@ -5,10 +5,15 @@ import org.apache.parquet.io.api.GroupConverter
 import org.apache.parquet.io.api.PrimitiveConverter
 import org.apache.parquet.io.api.RecordMaterializer
 import org.apache.parquet.schema.MessageType
+import java.text.SimpleDateFormat
 import java.time.Instant
 
 
 internal class PriceRecordMaterializer(schema: MessageType) : RecordMaterializer<PriceFragment>() {
+    companion object {
+        private val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    }
+
     private var localTimestamp: Instant = Instant.MIN
     private var localInstanceType: String = ""
 
@@ -17,9 +22,10 @@ internal class PriceRecordMaterializer(schema: MessageType) : RecordMaterializer
     private val root = object : GroupConverter() {
         private val converters = schema.fields.map { type ->
             when (type.name) {
-                "timestamp" -> object : PrimitiveConverter() {
-                    override fun addLong(value: Long) {
-                        localTimestamp = Instant.ofEpochMilli(value)
+                "Time" -> object : PrimitiveConverter() {
+                    override fun addBinary(value: org.apache.parquet.io.api.Binary) {
+                        val date = sdf.parse(value.toStringUsingUTF8())
+                        localTimestamp = Instant.ofEpochMilli(date.time)
                     }
                 }
                 "InstanceType" -> object : PrimitiveConverter() {

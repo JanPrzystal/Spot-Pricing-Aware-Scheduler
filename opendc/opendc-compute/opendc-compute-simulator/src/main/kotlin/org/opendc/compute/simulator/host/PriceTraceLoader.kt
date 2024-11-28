@@ -1,6 +1,5 @@
-package org.opendc.compute.price
+package org.opendc.compute.simulator.host
 
-import org.opendc.simulator.compute.price.PriceFragment
 import org.opendc.trace.Trace
 import org.opendc.trace.conv.SPOT_PRICE_TIMESTAMP
 import org.opendc.trace.conv.SPOT_PRICE_SPOT
@@ -57,7 +56,7 @@ public class PriceTraceLoader {
      * Load the trace with the specified [name] and [format].
      */
     public fun get(pathToFile: File): List<PriceFragment> {
-        val trace = Trace.open(pathToFile, "org/opendc/compute/price") //TODO
+        val trace = Trace.open(pathToFile, "price") //TODO
 
         return parsePrice(trace)
     }

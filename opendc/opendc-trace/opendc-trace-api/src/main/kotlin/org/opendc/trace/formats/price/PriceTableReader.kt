@@ -90,7 +90,7 @@ internal class PriceTableReader(private val reader: LocalParquetReader<PriceFrag
     override fun getInstant(index: Int): Instant {
         val record = checkNotNull(record) { "Reader in invalid state" }
         return when (index) {
-            colTimestamp -> record.startTime
+            colTimestamp -> record.time
             else -> throw IllegalArgumentException("Invalid column")
         }
     }

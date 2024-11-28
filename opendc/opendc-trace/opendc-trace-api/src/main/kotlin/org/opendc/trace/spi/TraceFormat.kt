@@ -29,6 +29,7 @@ import org.opendc.trace.bitbrains.BitbrainsTraceFormat
 import org.opendc.trace.formats.carbon.CarbonTraceFormat
 import org.opendc.trace.formats.failure.FailureTraceFormat
 import org.opendc.trace.formats.opendc.OdcVmTraceFormat
+import org.opendc.trace.formats.price.PriceTraceFormat
 import org.opendc.trace.gwf.GwfTraceFormat
 import org.opendc.trace.swf.SwfTraceFormat
 import org.opendc.trace.wfformat.WfFormatTraceFormat
@@ -125,6 +126,7 @@ public interface TraceFormat {
                 "azure" -> AzureTraceFormat()
                 "bitbrains" -> BitbrainsTraceFormat()
                 "carbon" -> CarbonTraceFormat()
+                "price" -> PriceTraceFormat()
                 "failure" -> FailureTraceFormat()
                 "gwf" -> GwfTraceFormat()
                 "opendc-vm" -> OdcVmTraceFormat()

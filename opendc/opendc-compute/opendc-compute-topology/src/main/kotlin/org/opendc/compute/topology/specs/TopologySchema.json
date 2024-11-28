@@ -97,6 +97,10 @@
                     "type": "string",
                     "default": "Host"
                 },
+                "pricePath": {
+                    "type": "string",
+                    "default": ""
+                },
                 "price": {
                     "type": "number",
                     "default": 0

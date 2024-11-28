@@ -1,4 +1,4 @@
-package org.opendc.simulator.compute.price;
+package org.opendc.compute.simulator.host;
 
 /**
  * An object holding the spot price information during a specific time frame.

@@ -1,4 +1,4 @@
-package org.opendc.simulator.compute.price;
+package org.opendc.compute.simulator.host;
 
 
 
@@ -75,18 +75,18 @@ public class PriceModel extends FlowNode {
 //TODO
     @Override
     public long onUpdate(long now) {
-        long absoluteTime = getAbsoluteTime(now);
-
-        // Check if the current fragment is still the correct fragment
-        if ((absoluteTime < currentFragment.getStartTime()) || (absoluteTime >= currentFragment.getEndTime())) {
-            this.findCorrectFragment(absoluteTime);
-        }
-
-        // Calculate cost for the duration of the current fragment
-        long duration = Math.min(currentFragment.getEndTime(), absoluteTime) - Math.max(currentFragment.getStartTime(), getAbsoluteTime(lastUpdateTime()));
-        if (duration > 0) {
-            this.totalCost += currentFragment.getPricePerUnit() * duration;
-        }
+//        long absoluteTime = getAbsoluteTime(now);
+//
+//        // Check if the current fragment is still the correct fragment
+//        if ((absoluteTime < currentFragment.getStartTime()) || (absoluteTime >= currentFragment.getEndTime())) {
+//            this.findCorrectFragment(absoluteTime);
+//        }
+//
+//        // Calculate cost for the duration of the current fragment
+//        long duration = Math.min(currentFragment.getEndTime(), absoluteTime) - Math.max(currentFragment.getStartTime(), getAbsoluteTime(lastUpdateTime()));
+//        if (duration > 0) {
+//            this.totalCost += currentFragment.getPricePerUnit() * duration;
+//        }
 
         // Update again at the end of this fragment
         return getRelativeTime(currentFragment.getEndTime());
@@ -99,7 +99,7 @@ public class PriceModel extends FlowNode {
         return totalCost;
     }
 
-    private void pushPriceIntensity(double price) {
-        this.host.updatePrice(price);
-    }
+//    private void pushPriceIntensity(double price) {
+//        this.host.updatePrice(price);
+//    }
 }
