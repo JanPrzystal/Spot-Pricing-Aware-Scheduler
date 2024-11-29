@@ -63,8 +63,8 @@ internal class PriceReadSupport(private val projection: List<String>?) : ReadSup
             Types.buildMessage()
                 .addFields(
                     Types
-                        .optional(PrimitiveType.PrimitiveTypeName.INT64)
-                        .`as`(LogicalTypeAnnotation.timestampType(true, LogicalTypeAnnotation.TimeUnit.MILLIS))
+                        .optional(PrimitiveType.PrimitiveTypeName.BINARY)
+//                        .`as`(LogicalTypeAnnotation.timestampType(true, LogicalTypeAnnotation.TimeUnit.MILLIS))
                         .named("Time"),
                     Types
                         .optional(PrimitiveType.PrimitiveTypeName.BINARY)
