@@ -65,7 +65,7 @@ public class SimHost(
     private val machineModel: MachineModel,
     private val powerModel: CpuPowerModel,
     private val powerMux: Multiplexer,
-    public var price: Double = 0.0,
+    @JvmField public var price: Double = 0.0,
     private val priceFragments: List<PriceFragment>,
     private val startTime: Long
 ) : AutoCloseable {
@@ -226,6 +226,10 @@ public class SimHost(
 
     public fun getGuests(): List<Guest> {
         return this.guests
+    }
+
+    public fun setPrice(price: Double) {
+        this.price = price
     }
 
     public fun canFit(task: ServiceTask): Boolean {
