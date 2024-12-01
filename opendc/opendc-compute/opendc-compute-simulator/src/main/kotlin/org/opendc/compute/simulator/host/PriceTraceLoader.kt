@@ -77,6 +77,12 @@ public class PriceTraceLoader {
          */
         public val fragments: MutableList<PriceFragment> = mutableListOf()
 
+        private val startDateMs = 1704067200000 //01.01.2024 00:00:00
+
+        private val globalStartTime = 1376314546000
+
+        private val hourMs = 60 * 60 * 1000
+
         /**
          * Add a fragment to the trace.
          *
@@ -88,10 +94,17 @@ public class PriceTraceLoader {
             instanceType: String,
             price: Double,
         ) {
+            val startMs = startTime.toEpochMilli() - startDateMs + globalStartTime
+
+            if(startMs < 0) {
+                println("Error: negative time")
+                return
+            }
+
             fragments.add(
                 PriceFragment(
-                    startTime.toEpochMilli(),
-                    Long.MAX_VALUE,
+                    startMs,
+                    startMs + hourMs,
                     instanceType,
                     price,
                 ),
