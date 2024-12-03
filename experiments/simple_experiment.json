@@ -6,5 +6,8 @@
     "workloads": [{
         "pathToFile": "workloads/bitbrains-small",
         "type": "ComputeWorkload"
+    }],
+    "allocationPolicies": [{
+        "policyType": "Price"
     }]
 }

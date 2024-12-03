@@ -71,6 +71,18 @@ public class HostView {
         return provisionedCores;
     }
 
+    /**
+     * Return the price of the host.
+     */
+    public double getPrice() {
+        // Calculate effective price of a host. E.g. if a host is already in use and paid for, adding a task is free.
+        if (this.host.getGuests().isEmpty()) {
+            return this.host.price;
+        } else {
+            return 0;
+        }
+    }
+
     @Override
     public String toString() {
         return "HostView[host=" + host + "]";
