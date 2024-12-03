@@ -5,6 +5,10 @@ package org.opendc.compute.simulator.host;
 import java.util.List;
 
 
+import org.opendc.compute.api.TaskState;
+import org.opendc.compute.simulator.internal.Guest;
+import org.opendc.simulator.compute.workload.SimWorkload;
+import org.opendc.simulator.compute.workload.Workload;
 import org.opendc.simulator.engine.FlowGraph;
 import org.opendc.simulator.engine.FlowNode;
 
@@ -88,7 +92,7 @@ public class PriceModel extends FlowNode {
 //            this.totalCost += currentFragment.getPricePerUnit() * duration;
 //        }
 
-        pushPriceValue(currentFragment.getSpotPrice());
+        pushPriceValue(currentFragment.getSpotPrice(), absoluteTime);
 
         // Update again at the end of this fragment
         return getRelativeTime(currentFragment.getEndTime());
@@ -101,7 +105,26 @@ public class PriceModel extends FlowNode {
         return totalCost;
     }
 
-    private void pushPriceValue(double price) {
+    private void pushPriceValue(double price, long absoluteTime) {
+        //TODO 1 put there the ondemand price
+        if (price > 100000) {
+            for (Guest guest : this.host.getGuests()) {
+                if (guest.getVirtualMachine() != null && guest.getState() == TaskState.RUNNING) {
+                    SimWorkload simWorkload = guest.getVirtualMachine().getActiveWorkload();
+                    if (simWorkload != null) {
+                        simWorkload.makeSnapshot(absoluteTime);
+                        Workload snapshot = simWorkload.getSnapshot();
+                        //guest.getTask().workload = simWorkload.getSnapshot();
+                        //guest.fail();  // This triggers rescheduling through the normal flow
+                        //guest.getTask().start();
+                        if (snapshot != null) {
+                            guest.getTask().setWorkload(snapshot); // Assign the snapshot to the tas
+                        }
+                    }
+                }
+            }
+            this.host.fail();
+        }
         this.host.setPrice(price);
     }
 }

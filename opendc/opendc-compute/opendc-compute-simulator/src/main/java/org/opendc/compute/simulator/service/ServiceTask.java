@@ -90,6 +90,8 @@ public class ServiceTask {
         return name;
     }
 
+    public Workload getWorkload() {return workload;}
+
     @NotNull
     public ServiceFlavor getFlavor() {
         return flavor;
