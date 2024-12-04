@@ -24,7 +24,7 @@ internal class PriceTableReader(private val reader: LocalParquetReader<PriceFrag
     override fun nextRow(): Boolean {
         try {
             val record = reader.read()
-            println(record)
+//            println(record)
             this.record = record
 
             return record != null

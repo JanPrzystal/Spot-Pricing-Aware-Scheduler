@@ -112,6 +112,8 @@ public class SimHost(
      */
     private var priceModel: PriceModel? = null
 
+    private var currentPriceEntry: PriceEntry? = null
+
     /**
      * The [GuestListener] that listens for guest events.
      */
@@ -229,7 +231,10 @@ public class SimHost(
     }
 
     public fun setPrice(price: Double) {
-        this.price = price
+        if (this.price != price) {
+            this.price = price
+            updatePriceEntry(price)
+        }
     }
 
     public fun canFit(task: ServiceTask): Boolean {
@@ -259,6 +264,10 @@ public class SimHost(
                 simMachine!!,
             )
 
+        if(currentPriceEntry == null) {
+            currentPriceEntry = PriceEntry(name, clock.millis(), 0L, price)
+        }
+
         guests.add(newGuest)
         newGuest.start()
 
@@ -284,7 +293,8 @@ public class SimHost(
         guest.delete()
 
         taskToGuestMap.remove(task)
-        guests.remove(guest)
+//        guests.remove(guest)
+        removeGuest(guest)
         task.host = null
     }
 
@@ -293,7 +303,8 @@ public class SimHost(
         guest.delete()
 
         taskToGuestMap.remove(task)
-        guests.remove(guest)
+//        guests.remove(guest)
+        removeGuest(guest)
     }
 
     public fun addListener(listener: HostListener) {
@@ -322,7 +333,8 @@ public class SimHost(
                     failed++
                     // Remove guests that have been deleted
                     this.taskToGuestMap.remove(guest.task)
-                    guests.remove()
+//                    guests.remove()
+                    removeGuest(null)
                 }
                 else -> invalid++
             }
@@ -403,5 +415,41 @@ public class SimHost(
         for (i in guests.indices) {
             guests[i].updateUptime()
         }
+    }
+
+    private fun updatePriceEntry(price: Double) {
+        if(currentPriceEntry != null) {
+            currentPriceEntry!!.durationMs = clock.millis() - currentPriceEntry!!.startTime
+
+            finalizeEntry(currentPriceEntry!!)
+
+            currentPriceEntry!!.price = price
+            currentPriceEntry!!.startTime = clock.millis()
+        }
+    }
+
+    // this should save the entry to output
+    private fun finalizeEntry(entry: PriceEntry){
+        fullCost += entry.getTotalCost()
+        println(entry.toString() + " total cost " + entry.getTotalCost())
+        println(fullCost)
+    }
+
+    private fun removeGuest(guest: Guest?) {
+        if (guest != null) {
+            guests.remove(guest)
+            println("remove guest "+guest.task.uid)
+        }else
+            println("remove guest "+guests.listIterator().remove())
+
+        if (guests.isEmpty() && currentPriceEntry != null) {
+            currentPriceEntry!!.durationMs = clock.millis() - currentPriceEntry!!.startTime
+            finalizeEntry(currentPriceEntry!!)
+            currentPriceEntry = null
+        }
+    }
+
+    public companion object {
+        public var fullCost: Double = 0.0
     }
 }
