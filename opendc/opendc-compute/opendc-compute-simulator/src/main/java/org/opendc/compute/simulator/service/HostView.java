@@ -74,12 +74,12 @@ public class HostView {
     /**
      * Return the price of the host.
      */
-    public double getPrice() {
+    public double getPriceToPerformance() {
         // Calculate effective price of a host. E.g. if a host is already in use and paid for, adding a task is free.
         if (this.host.getGuests().isEmpty()) {
-            return this.host.price;
+            return this.host.getPriceToPerformance();
         } else {
-            return 0;
+            return 100000.0;
         }
     }
 

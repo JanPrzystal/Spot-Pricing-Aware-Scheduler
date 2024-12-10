@@ -95,7 +95,7 @@ public class ComputeMetricReader(
                 while (isActive) {
                     delay(intervalMs)
 
-                    loggState()
+//                    loggState()
                 }
             } finally {
                 if (monitor is AutoCloseable) {

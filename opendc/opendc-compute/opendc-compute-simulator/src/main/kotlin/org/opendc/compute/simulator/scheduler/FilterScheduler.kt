@@ -69,6 +69,8 @@ public class FilterScheduler(
         val hosts = hosts
         val filteredHosts = hosts.filter { host -> filters.all { filter -> filter.test(host, task) } }
 
+        println("selecting for taks $task")
+
         val subset =
             if (weighers.isNotEmpty()) {
                 val results = weighers.map { it.getWeights(filteredHosts, task) }
@@ -100,6 +102,9 @@ public class FilterScheduler(
             } else {
                 filteredHosts
             }
+
+        if(subset.isNotEmpty())
+            println("picking ${subset[0].host.getName()}")
 
         // fixme: currently finding no matching hosts can result in an error
         return when (val maxSize = min(subsetSize, subset.size)) {

@@ -76,7 +76,20 @@ public class SimHost(
      */
     //TODO! do we need this???
     public fun getPriceToPerformance(): Double {
-        return machineModel.cpu.coreCount * machineModel.cpu.coreSpeed / price
+        val cpuPerformance = machineModel.cpu.totalCapacity
+        val memoryCapacity = machineModel.memory.size
+        //TODO include memory in calculation
+
+        return cpuPerformance / price
+    }
+
+    public fun getRemainingTime(): Long {
+        var time = 0L
+        for ( g in guests){
+//            val remaining = g.task.launchedAt + g.task.flavor clock.millis()
+        }
+
+        return time
     }
 
     /**
@@ -431,8 +444,8 @@ public class SimHost(
     // this should save the entry to output
     private fun finalizeEntry(entry: PriceEntry){
         fullCost += entry.getTotalCost()
-        println(entry.toString() + " total cost " + entry.getTotalCost())
-        println(fullCost)
+        println(entry.toString() + " total entry cost " + entry.getTotalCost())
+        println("current workload cost: $fullCost")
     }
 
     private fun removeGuest(guest: Guest?) {

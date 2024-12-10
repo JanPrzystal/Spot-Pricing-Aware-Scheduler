@@ -430,7 +430,9 @@ public final class ComputeService implements AutoCloseable {
     private void doSchedule() {
         // reorder tasks
 
-        while (!taskQueue.isEmpty()) {
+        int limit = 4;//TODO
+
+        while (!taskQueue.isEmpty() && limit-- > 0) {
             SchedulingRequest request = taskQueue.peek();
 
             if (request.isCancelled) {
@@ -450,6 +452,7 @@ public final class ComputeService implements AutoCloseable {
                 task.setState(TaskState.TERMINATED);
 
                 this.setTaskToBeRemoved(task);
+                limit++;
                 continue;
             }
 
@@ -470,6 +473,8 @@ public final class ComputeService implements AutoCloseable {
                     task.setState(TaskState.TERMINATED);
 
                     this.setTaskToBeRemoved(task);
+
+                    limit++;
                     continue;
                 } else {
                     break;
@@ -501,6 +506,7 @@ public final class ComputeService implements AutoCloseable {
             } catch (Exception cause) {
                 LOGGER.error("Failed to deploy VM", cause);
                 attemptsFailure++;
+                limit++;
             }
         }
     }
