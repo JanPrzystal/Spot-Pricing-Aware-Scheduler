@@ -32,6 +32,7 @@ import org.opendc.compute.simulator.scheduler.weights.InstanceCountWeigher
 import org.opendc.compute.simulator.scheduler.weights.RamWeigher
 import org.opendc.compute.simulator.scheduler.weights.VCpuWeigher
 import org.opendc.compute.simulator.scheduler.weights.PriceWeigher
+import org.opendc.compute.simulator.scheduler.weights.RandomWeigher
 import java.util.SplittableRandom
 import java.util.random.RandomGenerator
 
@@ -108,18 +109,27 @@ public fun createComputeScheduler(
                 filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio)),
                 weighers = listOf(VCpuWeigher(cpuAllocationRatio, multiplier = -1.0)),
             )
-        ComputeSchedulerEnum.Random ->
-            FilterScheduler(
-                filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio)),
-                weighers = emptyList(),
-                subsetSize = Int.MAX_VALUE,
-                random = SplittableRandom(seeder.nextLong()),
-            )
+//        ComputeSchedulerEnum.Random ->
+//            FilterScheduler(
+//                filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio)),
+//                weighers = emptyList(),
+//                subsetSize = Int.MAX_VALUE,
+//                random = SplittableRandom(seeder.nextLong()),
+//            )
         ComputeSchedulerEnum.Replay -> ReplayScheduler(placements)
         ComputeSchedulerEnum.Price ->
-            FilterScheduler(
+            PricingScheduler(
                 filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio)),
                 weighers = listOf(PriceWeigher(multiplier = 1.0)),
+                threshold = 1.5,
+                subsetSize = 6
+            )
+        ComputeSchedulerEnum.Random ->
+            PricingScheduler(
+                filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio)),
+                weighers = listOf(RandomWeigher(multiplier = 1.0)),
+                threshold = 1.5,
+                subsetSize = 1
             )
     }
 }

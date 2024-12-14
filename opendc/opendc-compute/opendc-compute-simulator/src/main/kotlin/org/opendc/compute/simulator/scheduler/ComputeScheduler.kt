@@ -22,8 +22,10 @@
 
 package org.opendc.compute.simulator.scheduler
 
+import org.opendc.compute.simulator.service.ComputeService
 import org.opendc.compute.simulator.service.HostView
 import org.opendc.compute.simulator.service.ServiceTask
+import java.util.Deque
 
 /**
  * A generic scheduler interface used by the [ComputeService] to select hosts to place [ServiceTask]s on.
@@ -46,4 +48,12 @@ public interface ComputeScheduler {
      * @return The host to schedule the server on or `null` if no server is available.
      */
     public fun select(task: ServiceTask): HostView?
+
+    public fun select(pendingTasks: Deque<ComputeService.SchedulingRequest>): HostView? {
+        return select(pendingTasks.peek().task)
+    }
+
+    public fun canScheduleMore(): Boolean {
+        return true
+    }
 }

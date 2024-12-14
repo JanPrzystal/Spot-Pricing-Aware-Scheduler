@@ -430,9 +430,7 @@ public final class ComputeService implements AutoCloseable {
     private void doSchedule() {
         // reorder tasks
 
-        int limit = 4;//TODO
-
-        while (!taskQueue.isEmpty() && limit-- > 0) {
+        while (!taskQueue.isEmpty() && scheduler.canScheduleMore()) {
             SchedulingRequest request = taskQueue.peek();
 
             if (request.isCancelled) {
@@ -452,12 +450,12 @@ public final class ComputeService implements AutoCloseable {
                 task.setState(TaskState.TERMINATED);
 
                 this.setTaskToBeRemoved(task);
-                limit++;
                 continue;
             }
 
             final ServiceFlavor flavor = task.getFlavor();
-            final HostView hv = scheduler.select(request.task);
+//            final HostView hv = scheduler.select(taskQueue);
+            final HostView hv = scheduler.select(task);
 
             if (hv == null || !hv.getHost().canFit(task)) {
                 LOGGER.trace("Task {} selected for scheduling but no capacity available for it at the moment", task);
@@ -474,7 +472,6 @@ public final class ComputeService implements AutoCloseable {
 
                     this.setTaskToBeRemoved(task);
 
-                    limit++;
                     continue;
                 } else {
                     break;
@@ -506,7 +503,6 @@ public final class ComputeService implements AutoCloseable {
             } catch (Exception cause) {
                 LOGGER.error("Failed to deploy VM", cause);
                 attemptsFailure++;
-                limit++;
             }
         }
     }
@@ -689,8 +685,8 @@ public final class ComputeService implements AutoCloseable {
     /**
      * A request to schedule a {@link ServiceTask} onto one of the {@link SimHost}s.
      */
-    static class SchedulingRequest {
-        final ServiceTask task;
+    public static class SchedulingRequest {
+        public final ServiceTask task;
         final long submitTime;
 
         boolean isCancelled;

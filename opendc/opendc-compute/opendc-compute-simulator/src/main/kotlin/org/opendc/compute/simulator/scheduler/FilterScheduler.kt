@@ -24,8 +24,10 @@ package org.opendc.compute.simulator.scheduler
 
 import org.opendc.compute.simulator.scheduler.filters.HostFilter
 import org.opendc.compute.simulator.scheduler.weights.HostWeigher
+import org.opendc.compute.simulator.service.ComputeService
 import org.opendc.compute.simulator.service.HostView
 import org.opendc.compute.simulator.service.ServiceTask
+import java.util.Deque
 import java.util.SplittableRandom
 import java.util.random.RandomGenerator
 import kotlin.math.min

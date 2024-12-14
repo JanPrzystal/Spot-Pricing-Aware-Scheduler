@@ -1,7 +1,7 @@
 {
     "name": "simple",
     "topologies": [{
-        "pathToFile": "topologies/small.json"
+        "pathToFile": "topologies/aws.json"
     }],
     "workloads": [{
         "pathToFile": "workloads/bitbrains-small",

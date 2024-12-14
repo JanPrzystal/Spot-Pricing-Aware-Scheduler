@@ -28,6 +28,8 @@ import org.opendc.compute.simulator.host.SimHost;
  * A view of a {@link SimHost} as seen from the {@link ComputeService}.
  */
 public class HostView {
+    public static double MAX_PERFORMANCE = 999999999.0; // a large value used to ensure a host gets picked by a scheduler
+
     private final SimHost host;
     int instanceCount;
     long availableMemory;
@@ -79,7 +81,7 @@ public class HostView {
         if (this.host.getGuests().isEmpty()) {
             return this.host.getPriceToPerformance();
         } else {
-            return 100000.0;
+            return MAX_PERFORMANCE;
         }
     }
 

@@ -100,9 +100,9 @@ public class FlowEdge {
      * Push new supply from the Supplier to the Consumer
      */
     public void pushSupply(double newSupply) {
-
-        this.supply = newSupply;
-        this.consumer.handleSupply(this, newSupply);
-        ((FlowNode) this.consumer).invalidate();
+        // FIXME this code causes infinite loop that freezes the simulation until it runs out of memory
+//        this.supply = newSupply;
+//        this.consumer.handleSupply(this, newSupply);
+//        ((FlowNode) this.consumer).invalidate();
     }
 }
