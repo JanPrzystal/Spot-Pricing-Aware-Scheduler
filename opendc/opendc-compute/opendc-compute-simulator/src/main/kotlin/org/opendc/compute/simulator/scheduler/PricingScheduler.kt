@@ -1,19 +1,18 @@
 package org.opendc.compute.simulator.scheduler
 
 import org.opendc.compute.simulator.scheduler.filters.HostFilter
+import org.opendc.compute.simulator.scheduler.filters.PriceFilter
 import org.opendc.compute.simulator.scheduler.weights.HostWeigher
 import org.opendc.compute.simulator.service.ComputeService
 import org.opendc.compute.simulator.service.HostView
 import org.opendc.compute.simulator.service.ServiceTask
 import java.util.Deque
-import java.util.Random
-import kotlin.math.min
 
 public class PricingScheduler(
     private val filters: List<HostFilter>,
     private val weighers: List<HostWeigher>,
     private val subsetSize: Int = 8,
-    private val threshold: Double = 1.0
+    private var threshold: Double,
 ) : ComputeScheduler {
 
     private val hosts = mutableListOf<HostView>()
@@ -24,8 +23,15 @@ public class PricingScheduler(
     private val savedHosts = mutableListOf<HostView>()
 
     private var average: Double = 0.0
+    private var temporaryAverage: Double = 0.0
+    private var hostsPicked: Int = 0
+    private var previousHostsPicked: Int = 0
+
+    private var checkThreshold = false
 
     private var currentLimit = subsetSize
+
+    private var priceFilter = PriceFilter(threshold)
 
     init {
         require(subsetSize >= 1) { "Subset size must be one or greater" }
@@ -107,6 +113,11 @@ public class PricingScheduler(
         if (savedHosts.isEmpty() && currentLimit==0){
             println("cannot schedule more: limit reached")
             currentLimit = subsetSize
+
+            average = temporaryAverage
+            previousHostsPicked = hostsPicked
+            checkThreshold = true
+
             return false
         } else
             return true
@@ -117,9 +128,19 @@ public class PricingScheduler(
      */
     override fun select(task: ServiceTask): HostView? {
         val hosts = hosts
-        val filteredHosts = hosts.filter { host -> filters.all { filter -> filter.test(host, task) } }
+        var filteredHosts = hosts.filter { host -> filters.all { filter -> filter.test(host, task) } }
+
+        if (checkThreshold)
+            filteredHosts = filteredHosts.filter { host -> priceFilter.test(host, average/previousHostsPicked) }
 
         println("selecting for taks $task")
+
+        if (filteredHosts.isEmpty()){
+            println("No matching hosts")
+            threshold += 0.1
+            priceFilter = PriceFilter(threshold)
+            return null
+        }
 
         val subset =
             if (weighers.isNotEmpty()) {
@@ -139,13 +160,13 @@ public class PricingScheduler(
         if(subset.isNotEmpty()) {
             println("picking ${subset[0].host.getName()}")
             currentLimit--
-        }
+            hostsPicked++
 
-        // fixme: currently finding no matching hosts can result in an error
-        return when (val maxSize = min(subsetSize, subset.size)) {
-            0 -> null
-            1 -> subset[0]
-            else -> subset[Random().nextInt(maxSize)]
+            temporaryAverage += subset[0].priceToPerformance
+
+            println("current p2p average = ${temporaryAverage/hostsPicked}")
+            return subset[0]
         }
+        else return null
     }
 }

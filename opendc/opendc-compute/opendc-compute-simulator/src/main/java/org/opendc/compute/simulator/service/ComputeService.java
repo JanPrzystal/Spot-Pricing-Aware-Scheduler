@@ -429,7 +429,9 @@ public final class ComputeService implements AutoCloseable {
      */
     private void doSchedule() {
         // reorder tasks
+        var success = false;
 
+        while(!success)
         while (!taskQueue.isEmpty() && scheduler.canScheduleMore()) {
             SchedulingRequest request = taskQueue.peek();
 
@@ -477,6 +479,7 @@ public final class ComputeService implements AutoCloseable {
                     break;
                 }
             }
+            else success = true;
 
             SimHost host = hv.getHost();
 

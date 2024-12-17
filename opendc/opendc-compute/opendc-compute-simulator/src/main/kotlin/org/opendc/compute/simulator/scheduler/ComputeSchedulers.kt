@@ -121,8 +121,8 @@ public fun createComputeScheduler(
             PricingScheduler(
                 filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio)),
                 weighers = listOf(PriceWeigher(multiplier = 1.0)),
-                threshold = 1.5,
-                subsetSize = 6
+                threshold = 2.0,
+                subsetSize = 4
             )
         ComputeSchedulerEnum.Random ->
             PricingScheduler(
