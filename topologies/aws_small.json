@@ -1,0 +1,115 @@
+{
+  "clusters":
+  [
+    {
+      "name": "C01",
+      "hosts" :
+      [
+        {
+          "name": "r7a.2xlarge-spot",
+          "cpu":
+          {
+            "coreCount": 8,
+            "coreSpeed": 3700
+          },
+          "memory": {
+            "memorySize": 64000000000
+          },
+          "count": 4,
+          "pricePath": "pricing/r7a.parquet"
+        },
+        {
+          "name": "m5a.4xlarge-spot",
+          "cpu":
+          {
+            "coreCount": 8,
+            "coreSpeed": 2500
+          },
+          "memory": {
+            "memorySize": 64000000000
+          },
+          "count": 3,
+          "pricePath": "pricing/m5a.parquet"
+        },
+        {
+          "name": "t3.medium-spot",
+          "cpu":
+          {
+            "coreCount": 1,
+            "coreSpeed": 2500
+          },
+          "memory": {
+            "memorySize": 4000000000
+          },
+          "count": 4,
+          "pricePath": "pricing/t3m.parquet"
+        },
+        {
+          "name": "c5.large-spot",
+          "cpu":
+          {
+            "coreCount": 1,
+            "coreSpeed": 3400
+          },
+          "memory": {
+            "memorySize": 4000000000
+          },
+          "count": 4,
+          "pricePath": "pricing/c5l.parquet"
+        },
+        {
+          "name": "r7a.2xlarge-demand",
+          "cpu":
+          {
+            "coreCount": 8,
+            "coreSpeed": 3700
+          },
+          "memory": {
+            "memorySize": 64000000000
+          },
+          "count": 5,
+          "price": 0.68104
+        },
+        {
+          "name": "m5a.4xlarge-demand",
+          "cpu":
+          {
+            "coreCount": 8,
+            "coreSpeed": 2500
+          },
+          "memory": {
+            "memorySize": 64000000000
+          },
+          "count": 5,
+          "price": 0.768
+        },
+        {
+          "name": "t3.medium-demand",
+          "cpu":
+          {
+            "coreCount": 1,
+            "coreSpeed": 2500
+          },
+          "memory": {
+            "memorySize": 4000000000
+          },
+          "count": 5,
+          "price": 0.0456
+        },
+        {
+          "name": "c5.large-demand",
+          "cpu":
+          {
+            "coreCount": 1,
+            "coreSpeed": 3400
+          },
+          "memory": {
+            "memorySize": 4000000000
+          },
+          "count": 5,
+          "price": 0.096
+        }
+      ]
+    }
+  ]
+}
