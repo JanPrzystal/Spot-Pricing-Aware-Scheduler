@@ -16,7 +16,7 @@
                         "memorySize": 64000000000
                     },
                     "count": 4,
-                    "pricePath": "pricing/aws-r7a2xl-euw1-az1.parquet"
+                    "pricePath": "pricing/r7a.parquet"
                 },
                 {
                     "name": "m5a.4xlarge-spot",
@@ -29,7 +29,7 @@
                         "memorySize": 64000000000
                     },
                     "count": 6,
-                    "pricePath": "pricing/aws-m5a4xl-euw1-az1.parquet"
+                    "pricePath": "pricing/m5a.parquet"
                 },
                 {
                     "name": "t3.medium-spot",
@@ -42,7 +42,7 @@
                         "memorySize": 4000000000
                     },
                     "count": 8,
-                    "pricePath": "pricing/aws-t3m-euw1-az1.parquet"
+                    "pricePath": "pricing/t3m.parquet"
                 },
                 {
                     "name": "c5.large-spot",
@@ -55,7 +55,7 @@
                         "memorySize": 4000000000
                     },
                     "count": 8,
-                    "pricePath": "pricing/aws-c5l-euw1-az1.parquet"
+                    "pricePath": "pricing/c5l.parquet"
                 },
                 {
                     "name": "r7a.2xlarge-demand",
@@ -67,7 +67,7 @@
                     "memory": {
                         "memorySize": 64000000000
                     },
-                    "count": 10,
+                    "count": 20,
                     "price": 0.68104
                 },
                 {
@@ -80,7 +80,7 @@
                     "memory": {
                         "memorySize": 64000000000
                     },
-                    "count": 10,
+                    "count": 20,
                     "price": 0.768
                 },
                 {
@@ -93,7 +93,7 @@
                     "memory": {
                         "memorySize": 4000000000
                     },
-                    "count": 10,
+                    "count": 20,
                     "price": 0.0456
                 },
                 {
@@ -106,7 +106,7 @@
                     "memory": {
                         "memorySize": 4000000000
                     },
-                    "count": 10,
+                    "count": 20,
                     "price": 0.096
                 }
             ]

@@ -73,7 +73,9 @@ public class PriceModel extends FlowNode {
 
         // Traverse to the next fragment, until you reach the correct fragment
         while (absoluteTime >= this.currentFragment.getEndTime()) {
-            this.currentFragment = fragments.get(++this.fragmentIndex);
+//            try {
+                this.currentFragment = fragments.get(++this.fragmentIndex);
+//            } catch (IndexOutOfBoundsException e) {}
         }
     }
 //TODO

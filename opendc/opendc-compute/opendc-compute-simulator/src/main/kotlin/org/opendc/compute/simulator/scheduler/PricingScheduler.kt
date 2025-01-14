@@ -130,10 +130,10 @@ public class PricingScheduler(
         val hosts = hosts
         var filteredHosts = hosts.filter { host -> filters.all { filter -> filter.test(host, task) } }
 
-        if (checkThreshold)
+        if (checkThreshold && threshold != 0.0)
             filteredHosts = filteredHosts.filter { host -> priceFilter.test(host, average/previousHostsPicked) }
 
-        println("selecting for taks $task")
+//        println("selecting for taks $task")
 
         if (filteredHosts.isEmpty()){
             println("No matching hosts")
