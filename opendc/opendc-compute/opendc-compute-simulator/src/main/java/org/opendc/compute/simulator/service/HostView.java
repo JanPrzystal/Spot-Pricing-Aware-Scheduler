@@ -85,6 +85,14 @@ public class HostView {
         }
     }
 
+    public double getPrice() {
+        if (this.host.getGuests().isEmpty()) {
+            return this.host.getPrice();
+        } else {
+            return MAX_PERFORMANCE;
+        }
+    }
+
     @Override
     public String toString() {
         return "HostView[host=" + host + "]";

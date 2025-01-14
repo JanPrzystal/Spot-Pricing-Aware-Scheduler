@@ -8,6 +8,6 @@
         "type": "ComputeWorkload"
     }],
     "allocationPolicies": [{
-        "policyType": "Price"
+        "policyType": "Demand"
     }]
 }

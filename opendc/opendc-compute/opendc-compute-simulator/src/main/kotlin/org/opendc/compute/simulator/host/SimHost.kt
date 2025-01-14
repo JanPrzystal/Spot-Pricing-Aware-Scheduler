@@ -83,6 +83,10 @@ public class SimHost(
         return cpuPerformance / price
     }
 
+    public fun getPrice(): Double {
+        return price
+    }
+
     public fun getRemainingTime(): Long {
         var time = 0L
         for ( g in guests){

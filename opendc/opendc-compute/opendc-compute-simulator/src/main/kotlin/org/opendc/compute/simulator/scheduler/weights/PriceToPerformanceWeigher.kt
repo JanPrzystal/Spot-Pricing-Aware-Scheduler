@@ -31,14 +31,15 @@ import org.opendc.compute.simulator.service.ServiceTask
  * @param multiplier Weight multiplier ratio. A positive value will result in the scheduler preferring hosts with more
  * available price, and a negative number will result in the scheduler preferring hosts with less price.
  */
-public class PriceWeigher(override val multiplier: Double = 1.0) : HostWeigher {
+public class PriceToPerformanceWeigher(override val multiplier: Double = 1.0) : HostWeigher {
     override fun getWeight(
         host: HostView,
         task: ServiceTask,
     ): Double {
-        val price = host.getPrice()
-        println("${host.host.getName()} price: $price")
-        return price
+        val ratio = host.getPriceToPerformance()
+        println("${host.host.getName()} p2p: $ratio")
+        return ratio
+        //TODO
     }
 
     override fun toString(): String = "PriceWeigher"

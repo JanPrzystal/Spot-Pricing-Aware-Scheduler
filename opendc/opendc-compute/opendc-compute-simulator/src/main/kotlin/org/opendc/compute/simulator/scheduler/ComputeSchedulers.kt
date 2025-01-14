@@ -28,13 +28,13 @@ import org.opendc.compute.simulator.scheduler.filters.ComputeFilter
 import org.opendc.compute.simulator.scheduler.filters.RamFilter
 import org.opendc.compute.simulator.scheduler.filters.VCpuFilter
 import org.opendc.compute.simulator.scheduler.weights.CoreRamWeigher
-import org.opendc.compute.simulator.scheduler.weights.DemandWeigher
+import org.opendc.compute.simulator.scheduler.filters.DemandFilter
 import org.opendc.compute.simulator.scheduler.weights.InstanceCountWeigher
 import org.opendc.compute.simulator.scheduler.weights.RamWeigher
 import org.opendc.compute.simulator.scheduler.weights.VCpuWeigher
+import org.opendc.compute.simulator.scheduler.weights.PriceToPerformanceWeigher
 import org.opendc.compute.simulator.scheduler.weights.PriceWeigher
 import org.opendc.compute.simulator.scheduler.weights.RandomWeigher
-import java.util.SplittableRandom
 import java.util.random.RandomGenerator
 
 public enum class ComputeSchedulerEnum {
@@ -49,6 +49,7 @@ public enum class ComputeSchedulerEnum {
     Random,
     Replay,
     Price,
+    PriceToPerformance,
     Demand,
 }
 
@@ -119,12 +120,19 @@ public fun createComputeScheduler(
 //                random = SplittableRandom(seeder.nextLong()),
 //            )
         ComputeSchedulerEnum.Replay -> ReplayScheduler(placements)
+        ComputeSchedulerEnum.PriceToPerformance ->
+            PricingScheduler(
+                filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio)),
+                weighers = listOf(PriceToPerformanceWeigher(multiplier = 1.0)),
+                threshold = 5.0,
+                subsetSize = 4
+            )
         ComputeSchedulerEnum.Price ->
             PricingScheduler(
                 filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio)),
                 weighers = listOf(PriceWeigher(multiplier = 1.0)),
-                threshold = 5.0,
-                subsetSize = 4
+                threshold = 0.0,
+                subsetSize = 8
             )
         ComputeSchedulerEnum.Random ->
             PricingScheduler(
@@ -135,8 +143,8 @@ public fun createComputeScheduler(
             )
         ComputeSchedulerEnum.Demand ->
             PricingScheduler(
-                filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio)),
-                weighers = listOf(DemandWeigher(multiplier = 1.0)),
+                filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio), DemandFilter()),
+                weighers = listOf(PriceToPerformanceWeigher(multiplier = 1.0)),
                 threshold = 0.0
             )
     }
