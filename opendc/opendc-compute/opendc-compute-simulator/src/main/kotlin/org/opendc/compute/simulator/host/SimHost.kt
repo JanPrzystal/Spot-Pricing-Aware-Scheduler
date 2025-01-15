@@ -443,6 +443,8 @@ public class SimHost(
             currentPriceEntry!!.price = price
             currentPriceEntry!!.startTime = clock.millis()
         }
+
+        hostListeners.forEach { it.onPriceChanged(this) }
     }
 
     // this should save the entry to output

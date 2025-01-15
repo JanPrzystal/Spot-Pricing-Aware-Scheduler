@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.opendc.compute.api.TaskState;
 import org.opendc.compute.simulator.internal.Guest;
+import org.opendc.compute.simulator.scheduler.ComputeSchedulers;
+import org.opendc.compute.simulator.service.ComputeService;
 import org.opendc.simulator.compute.workload.SimWorkload;
 import org.opendc.simulator.compute.workload.Workload;
 import org.opendc.simulator.engine.FlowGraph;
@@ -73,9 +75,20 @@ public class PriceModel extends FlowNode {
 
         // Traverse to the next fragment, until you reach the correct fragment
         while (absoluteTime >= this.currentFragment.getEndTime()) {
-//            try {
+            try {
                 this.currentFragment = fragments.get(++this.fragmentIndex);
-//            } catch (IndexOutOfBoundsException e) {}
+            } catch (IndexOutOfBoundsException e) {
+                // force update of price by random readjustment
+                // prevent indefinite sim updates by only updating if there are tasks left
+                if (!ComputeService.instance.getTasks().isEmpty())
+                    this.currentFragment = new PriceFragment(
+                        currentFragment.getEndTime(),
+                        currentFragment.getEndTime() + 1000 * 60 * 60,
+                        currentFragment.getInstanceType(),
+                        currentFragment.getSpotPrice() + ((Math.random() - 0.5) / 100)
+                    );
+                else throw e;
+            }
         }
     }
 //TODO

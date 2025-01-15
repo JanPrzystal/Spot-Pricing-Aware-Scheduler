@@ -144,10 +144,18 @@ public final class ComputeService implements AutoCloseable {
 
     private ComputeMetricReader metricReader;
 
+    private volatile boolean scheduleInProgress = false;
+
     /**
      * A [HostListener] used to track the active tasks.
      */
     private final HostListener hostListener = new HostListener() {
+        @Override
+        public void onPriceChanged(SimHost host) {
+            if(!scheduleInProgress)
+                requestSchedulingCycle();
+        }
+
         @Override
         public void onStateChanged(@NotNull SimHost host, @NotNull HostState newState) {
             LOGGER.debug("Host {} state changed: {}", host, newState);
@@ -168,6 +176,7 @@ public final class ComputeService implements AutoCloseable {
 
         @Override
         public void onStateChanged(@NotNull SimHost host, @NotNull ServiceTask task, @NotNull TaskState newState) {
+
             if (task.getHost() != host) {
                 // This can happen when a task is rescheduled and started on another machine, while being deleted from
                 // the old machine.
@@ -178,6 +187,7 @@ public final class ComputeService implements AutoCloseable {
 
             if (newState == TaskState.COMPLETED || newState == TaskState.TERMINATED || newState == TaskState.FAILED) {
                 LOGGER.info("task {} {} {} finished", task.getUid(), task.getName(), task.getFlavor());
+                System.out.println("task finished" + task.getUid() + " " + task.getName() + " " + task.getFlavor());
 
                 if (activeTasks.remove(task) != null) {
                     tasksActive--;
@@ -232,7 +242,11 @@ public final class ComputeService implements AutoCloseable {
         this.scheduler = scheduler;
         this.pacer = new Pacer(dispatcher, quantum.toMillis(), (time) -> doSchedule());
         this.maxNumFailures = maxNumFailures;
+
+        instance = this;
     }
+
+    public static ComputeService instance;
 
     /**
      * Create a new {@link Builder} instance.
@@ -429,9 +443,9 @@ public final class ComputeService implements AutoCloseable {
      */
     private void doSchedule() {
         // reorder tasks
-        var success = false;
+        scheduleInProgress = true;
 
-        while(!success)
+//        while(!success)
         while (!taskQueue.isEmpty() && scheduler.canScheduleMore()) {
             SchedulingRequest request = taskQueue.peek();
 
@@ -479,7 +493,7 @@ public final class ComputeService implements AutoCloseable {
                     break;
                 }
             }
-            else success = true;
+//            else success = true;
 
             SimHost host = hv.getHost();
 
@@ -508,6 +522,8 @@ public final class ComputeService implements AutoCloseable {
                 attemptsFailure++;
             }
         }
+
+        scheduleInProgress = false;
     }
 
     /**

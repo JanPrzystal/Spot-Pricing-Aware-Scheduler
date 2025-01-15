@@ -12,7 +12,7 @@ public class PricingScheduler(
     private val filters: List<HostFilter>,
     private val weighers: List<HostWeigher>,
     private val subsetSize: Int = 8,
-    private var threshold: Double,
+    private var threshold: Double = -1.0,
 ) : ComputeScheduler {
 
     private val hosts = mutableListOf<HostView>()
@@ -74,8 +74,6 @@ public class PricingScheduler(
             return savedHosts.removeFirst()
         }
 
-        println("scheduling ${pendingTasks.size} tasks")
-
         var filteredHosts = hosts.toList()
         for (task in pendingTasks) {
             val tmp = filteredHosts.filter { host -> filters.all { filter -> filter.test(host, task.task) } }
@@ -128,17 +126,20 @@ public class PricingScheduler(
      */
     override fun select(task: ServiceTask): HostView? {
         val hosts = hosts
+
         var filteredHosts = hosts.filter { host -> filters.all { filter -> filter.test(host, task) } }
 
-        if (checkThreshold && threshold != 0.0)
+        if (checkThreshold && threshold > 0.0)
             filteredHosts = filteredHosts.filter { host -> priceFilter.test(host, average/previousHostsPicked) }
 
-//        println("selecting for taks $task")
+        println("selecting for taks $task")
 
         if (filteredHosts.isEmpty()){
             println("No matching hosts")
-            threshold += 0.1
-            priceFilter = PriceFilter(threshold)
+            if(threshold > 0.0) {
+                threshold += 0.1
+                priceFilter = PriceFilter(threshold)
+            }
             return null
         }
 

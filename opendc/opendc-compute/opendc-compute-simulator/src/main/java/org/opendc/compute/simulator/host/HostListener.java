@@ -38,4 +38,10 @@ public interface HostListener {
      * This method is invoked when the state of a {@link SimHost} has changed.
      */
     default void onStateChanged(SimHost host, HostState newState) {}
+
+
+    /**
+     * This method is invoked when the price of a {@link SimHost} has changed.
+     */
+    default void onPriceChanged(SimHost host) {}
 }
