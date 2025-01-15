@@ -122,24 +122,24 @@ public class PriceModel extends FlowNode {
 
     private void pushPriceValue(double price, long absoluteTime) {
         //TODO 1 put there the ondemand price
-        if (price > 100000) {
-            for (Guest guest : this.host.getGuests()) {
-                if (guest.getVirtualMachine() != null && guest.getState() == TaskState.RUNNING) {
-                    SimWorkload simWorkload = guest.getVirtualMachine().getActiveWorkload();
-                    if (simWorkload != null) {
-                        simWorkload.makeSnapshot(absoluteTime);
-                        Workload snapshot = simWorkload.getSnapshot();
-                        //guest.getTask().workload = simWorkload.getSnapshot();
-                        //guest.fail();  // This triggers rescheduling through the normal flow
-                        //guest.getTask().start();
-                        if (snapshot != null) {
-                            guest.getTask().setWorkload(snapshot); // Assign the snapshot to the tas
-                        }
-                    }
-                }
-            }
-            this.host.fail();
-        }
+//        if (Math.random() < 0.005) {
+//            for (Guest guest : this.host.getGuests()) {
+//                if (guest.getVirtualMachine() != null && guest.getState() == TaskState.RUNNING) {
+//                    SimWorkload simWorkload = guest.getVirtualMachine().getActiveWorkload();
+//                    if (simWorkload != null) {
+//                        simWorkload.makeSnapshot(absoluteTime);
+//                        Workload snapshot = simWorkload.getSnapshot();
+//                        //guest.getTask().workload = simWorkload.getSnapshot();
+//                        //guest.fail();  // This triggers rescheduling through the normal flow
+//                        //guest.getTask().start();
+//                        if (snapshot != null) {
+//                            guest.getTask().setWorkload(snapshot); // Assign the snapshot to the tas
+//                        }
+//                    }
+//                }
+//            }
+//            this.host.fail();
+//        }
         this.host.setPrice(price);
     }
 }
