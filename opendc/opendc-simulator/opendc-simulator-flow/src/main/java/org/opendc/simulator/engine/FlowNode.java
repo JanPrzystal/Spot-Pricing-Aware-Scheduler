@@ -126,6 +126,7 @@ public abstract class FlowNode {
             newDeadline = this.onUpdate(now);
         } catch (Exception e) {
             doFail(e);
+//            closeNode();
         }
 
         // Check whether the stage is marked as closing.

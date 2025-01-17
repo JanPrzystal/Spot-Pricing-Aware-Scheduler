@@ -124,27 +124,27 @@ public fun createComputeScheduler(
             PricingScheduler(
                 filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio)),
                 weighers = listOf(PriceToPerformanceWeigher(multiplier = 1.0)),
-//                threshold = 5.0,
-                subsetSize = 4
+//                threshold = 1.5,
+                subsetSize = 12
             )
         ComputeSchedulerEnum.Price ->
             PricingScheduler(
                 filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio)),
                 weighers = listOf(PriceWeigher(multiplier = 1.0)),
 //                threshold = 0.0,
-                subsetSize = 8
+//                subsetSize = 8
             )
         ComputeSchedulerEnum.Random ->
             PricingScheduler(
                 filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio)),
                 weighers = listOf(RandomWeigher(multiplier = 1.0)),
 //                threshold = 0.0,
-                subsetSize = 8
+//                subsetSize = 8
             )
         ComputeSchedulerEnum.Demand ->
             PricingScheduler(
                 filters = listOf(ComputeFilter(), VCpuFilter(cpuAllocationRatio), RamFilter(ramAllocationRatio), DemandFilter()),
-                weighers = listOf(PriceToPerformanceWeigher(multiplier = 1.0)),
+                weighers = listOf(PriceWeigher(multiplier = 1.0)),
 //                threshold = 0.0
             )
     }

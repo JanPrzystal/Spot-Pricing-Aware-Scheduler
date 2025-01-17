@@ -62,6 +62,9 @@ public class FlowGraph {
 
         // Remove all edges connected to node
         final ArrayList<FlowEdge> connectedEdges = nodeToEdge.get(node);
+
+        if (connectedEdges == null) {return;}
+
         while (connectedEdges.size() > 0) {
             removeEdge(connectedEdges.get(0));
         }

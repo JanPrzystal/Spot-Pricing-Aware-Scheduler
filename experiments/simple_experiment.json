@@ -8,6 +8,6 @@
         "type": "ComputeWorkload"
     }],
     "allocationPolicies": [{
-        "policyType": "Demand"
+        "policyType": "PriceToPerformance"
     }]
 }

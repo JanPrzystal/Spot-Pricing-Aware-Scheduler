@@ -37,7 +37,7 @@ public class PriceToPerformanceWeigher(override val multiplier: Double = 1.0) : 
         task: ServiceTask,
     ): Double {
         val ratio = host.getPriceToPerformance()
-        println("${host.host.getName()} p2p: $ratio")
+//        println("${host.host.getName()} p2p: $ratio")
         return ratio
         //TODO
     }

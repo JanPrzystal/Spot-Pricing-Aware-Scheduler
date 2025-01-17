@@ -37,8 +37,8 @@ public class PriceWeigher(override val multiplier: Double = 1.0) : HostWeigher {
         task: ServiceTask,
     ): Double {
         val price = host.getPrice()
-        println("${host.host.getName()} price: $price")
-        return price
+//        println("${host.host.getName()} price: $price")
+        return 1/price
     }
 
     override fun toString(): String = "PriceWeigher"
