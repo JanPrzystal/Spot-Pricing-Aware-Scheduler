@@ -3,6 +3,7 @@ package org.opendc.compute.simulator.host;
 
 
 import java.util.List;
+import java.util.Random;
 
 
 import org.opendc.compute.api.TaskState;
@@ -26,6 +27,8 @@ public class PriceModel extends FlowNode {
     private List<PriceFragment> fragments; // List of price fragments for simulation
     private PriceFragment currentFragment; // Current active price fragment
     private int fragmentIndex; // Index of the current fragment
+
+    private Random rand = new Random();
 
     /**
      * Construct a PriceModel
@@ -85,7 +88,9 @@ public class PriceModel extends FlowNode {
                         currentFragment.getEndTime(),
                         currentFragment.getEndTime() + 1000 * 60 * 60,
                         currentFragment.getInstanceType(),
-                        currentFragment.getSpotPrice() + ((Math.random() - 0.5) / 100)
+                        rand.nextInt(0, 100) > 90 ?
+                            currentFragment.getSpotPrice() + (rand.nextGaussian() / 200) :
+                            currentFragment.getSpotPrice()
                     );
                 else throw e;
             }

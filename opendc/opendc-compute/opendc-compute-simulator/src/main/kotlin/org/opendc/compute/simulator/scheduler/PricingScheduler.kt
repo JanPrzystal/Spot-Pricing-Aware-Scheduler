@@ -22,8 +22,8 @@ public class PricingScheduler(
      */
     private val savedHosts = mutableListOf<HostView>()
 
-    private var average: Double = 0.0
-    private var temporaryAverage: Double = 0.0
+    private var priceSum: Double = 0.0
+    private var temporarySum: Double = 0.0
     private var hostsPicked: Int = 0
     private var previousHostsPicked: Int = 0
 
@@ -112,9 +112,13 @@ public class PricingScheduler(
             println("cannot schedule more: limit reached")
             currentLimit = subsetSize
 
-            average = temporaryAverage
-            previousHostsPicked = hostsPicked
-            checkThreshold = true
+            if (temporarySum > 0.0 && hostsPicked > 0) {
+                priceSum += temporarySum
+                temporarySum = 0.0
+                previousHostsPicked += hostsPicked
+                hostsPicked = 0
+                checkThreshold = true
+            }
 
             return false
         } else
@@ -130,14 +134,14 @@ public class PricingScheduler(
         var filteredHosts = hosts.filter { host -> filters.all { filter -> filter.test(host, task) } }
 
         if (checkThreshold && threshold > 0.0)
-            filteredHosts = filteredHosts.filter { host -> priceFilter.test(host, average/previousHostsPicked) }
+            filteredHosts = filteredHosts.filter { host -> priceFilter.test(host, priceSum/previousHostsPicked) }
 
         println("selecting for taks $task")
 
         if (filteredHosts.isEmpty()){
             println("No matching hosts")
             if(threshold > 0.0) {
-                threshold += 0.1
+                threshold += 0.001
                 priceFilter = PriceFilter(threshold)
             }
             return null
@@ -161,11 +165,12 @@ public class PricingScheduler(
         if(subset.isNotEmpty()) {
             println("picking ${subset[0].host.getName()}")
             currentLimit--
-            hostsPicked++
+            if (subset[0].priceToPerformance < HostView.MAX_PERFORMANCE) {
+                hostsPicked++
 
-            temporaryAverage += subset[0].priceToPerformance
-
-            println("current p2p average = ${temporaryAverage/hostsPicked}")
+                temporarySum += subset[0].priceToPerformance
+            }
+            println("current p2p average = ${temporarySum/hostsPicked}")
             return subset[0]
         }
         else return null
