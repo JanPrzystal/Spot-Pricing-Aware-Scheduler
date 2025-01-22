@@ -25,8 +25,9 @@ Please note that this repository contains the code supporting our scientific rep
 All the schedulers and their parameters with their respective effect on the proce are describe in the report.
 
 1. **Setup**:
+   
    - Modify `ComputeSchedulers.kt` for scheduler parameters.
-   -   For price-aware schedulers, you can tune two key parameters that control cost-time trade-offs:
+     For price-aware schedulers, you can tune two key parameters that control cost-time trade-offs:
 
    ```kotlin
 
@@ -40,21 +41,21 @@ All the schedulers and their parameters with their respective effect on the proc
 
    * threshold (T): Controls host selection based on price-to-performance ratio (ptp)
 
-     - After initial period, only selects hosts where ptp does not exceed ptp * T
+      After initial period, only selects hosts where ptp does not exceed ptp * T
 
-     - Lower values (e.g., 1.1) lead to lower costs but longer execution times
+       Lower values (e.g., 1.1) lead to lower costs but longer execution times
 
    
 
    * subsetSize (Nt): Limits tasks scheduled per cycle
 
-     - Prevents scheduling all pending tasks at once
+     Prevents scheduling all pending tasks at once
 
-     - Helpful when limited well-scoring hosts are available
+     Helpful when limited well-scoring hosts are available
 
 
    - Configure `simple_experiment.json` for the scheduler and topology.
-   -  ```json
+     ```json
 
      {
 
@@ -86,15 +87,15 @@ All the schedulers and their parameters with their respective effect on the proc
 
      Where:
 
-     - topologies: Points to AWS infrastructure configuration
+     topologies: Points to AWS infrastructure configuration
 
-     - workloads: Specifies BitBrains dataset location
+      workloads: Specifies BitBrains dataset location
 
-     - allocationPolicies: Defines the scheduler type (e.g., PriceToPerformance / Random / Demand / Price)
-2. **Execution**:
+     allocationPolicies: Defines the scheduler type (e.g., PriceToPerformance / Random / Demand / Price)
+3. **Execution**:
    - Run OpenDC in IntelliJ IDEA with `ExperimentCli` as the main class.
    - Use `--experiment-path <path-to-experiment-file>`.
-   - Results will be visible on the console 
+   - Results will be visible in the console 
 ---
 
 ## Experiments
