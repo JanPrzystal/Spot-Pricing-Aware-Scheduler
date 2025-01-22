@@ -26,7 +26,7 @@ All the schedulers and their parameters with their respective effect on the proc
 
 1. **Setup**:
    
-   - Modify `ComputeSchedulers.kt` for scheduler parameters.
+   1.1 Modify `ComputeSchedulers.kt` for scheduler parameters.
      For price-aware schedulers, you can tune two key parameters that control cost-time trade-offs:
 
    ```kotlin
@@ -54,7 +54,7 @@ All the schedulers and their parameters with their respective effect on the proc
      Helpful when limited well-scoring hosts are available
 
 
-   - Configure `simple_experiment.json` for the scheduler and topology.
+   1.2 Configure `simple_experiment.json` for the scheduler and topology.
      ```json
 
      {
@@ -92,7 +92,7 @@ All the schedulers and their parameters with their respective effect on the proc
       workloads: Specifies BitBrains dataset location
 
      allocationPolicies: Defines the scheduler type (e.g., PriceToPerformance / Random / Demand / Price)
-3. **Execution**:
+2. **Execution**:
    - Run OpenDC in IntelliJ IDEA with `ExperimentCli` as the main class.
    - Use `--experiment-path <path-to-experiment-file>`.
    - Results will be visible in the console 
